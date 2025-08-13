@@ -6,16 +6,16 @@ $links = [
         'url'   => '/',
     ],
     [
-        'title' => 'Blog',
-        'url'   => '/blog.php',
-    ],
-    [
-        'title' => 'Acerca de',
-        'url'   => '/about.php',
+        'title' => 'Journal',
+        'url'   => '/journal',
     ],
     [
         'title' => 'Proyectos',
-        'url'   => '/links.php',
+        'url'   => '/links',
+    ],
+    [
+        'title' => 'Acerca de',
+        'url'   => '/about',
     ],
 ];
 
