@@ -6,10 +6,6 @@ $navLinks = [
         'url'   => '/',
     ],
     [
-        'title' => 'Journal',
-        'url'   => '/journal',
-    ],
-    [
         'title' => 'Proyectos',
         'url'   => '/links',
     ],

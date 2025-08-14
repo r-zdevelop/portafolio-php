@@ -14,7 +14,7 @@
     <?php foreach ($posts as $post): ?>
         <article>
             <h3 class="text-lg font-semibold text-gray-900 hover:text-gray-600">
-                <a href="#">
+                <a href="/journal?id=<?= $post['id'] ?>" class="hover:underline">
                     <?= $post['title'] ?>
                 </a>
             </h3>
