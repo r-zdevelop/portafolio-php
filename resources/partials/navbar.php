@@ -1,6 +1,6 @@
 <?php 
 
-$links = [
+$navLinks = [
     [
         'title' => 'Inicio',
         'url'   => '/',
@@ -21,10 +21,10 @@ $links = [
 
 ?>
 
-<nav class="bg-gray-800">
+<nav class="bg-gray-800 mb-8">
     <div class="mx-auto max-w-7xl flex h-16 items-center justify-center">
         <div class="flex gap-4">
-            <?php foreach ($links as $link): ?>
+            <?php foreach ($navLinks as $link): ?>
                 <a href="<?= $link['url'] ?>" class="
                     <?=
                         $_SERVER['REQUEST_URI'] === $link['url']
