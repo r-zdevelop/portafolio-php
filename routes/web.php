@@ -6,4 +6,5 @@ return [
     '/links' => 'app/Controllers/links.php',
     '/journal'  => 'app/Controllers/journal.php',
     '/blog'  => 'app/Controllers/blog.php',
+    '/links/create' => 'app/Controllers/links-create.php',
 ];

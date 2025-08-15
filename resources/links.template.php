@@ -8,6 +8,12 @@
     </p>
 </div>
 
+<div class="my-16">
+    <a href="/links/create" class="text-sm font-semibold text-gray-900">
+        Registrar &rarr;
+    </a>
+</div>
+
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-16">
     
     <!-- foreach -->
