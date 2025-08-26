@@ -1,18 +1,12 @@
 <?php 
 
 require __DIR__ . '/../framework/Database.php';
+require __DIR__ . '/../framework/Router.php';
 
 $db = new Database();
 
-$routes = require __DIR__ . '/../routes/web.php';
+$router = new Router();
 
-$requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+require __DIR__ . '/../routes/web.php';
 
-$route = $routes[$requestUri] ?? null;
-
-if ($route) {
-    require __DIR__ . '/../' . $route;
-} else {
-    echo $route;
-    exit('404 Not Found');
-}
+$router->run();
