@@ -29,7 +29,6 @@ class LinkController
                 'description'   => 'required|min:3|max:500'
             ]);
 
-
             if ($validator->passes()) {
                 $title = $_POST['title'] ?? '';
                 $url = $_POST['url'] ?? '';
@@ -50,5 +49,16 @@ class LinkController
         }
 
         require __DIR__ . '/../../resources/links-create.template.php';
+    }
+
+    public function delete()
+    {
+        $db = new Database();
+        $id = $_POST['id'] ?? null;
+        if ($id) {
+            $db->query('DELETE FROM links WHERE id = :id', ['id' => $id]);
+        }
+        header('Location: /links');
+        exit;
     }
 }
