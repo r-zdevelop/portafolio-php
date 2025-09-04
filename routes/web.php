@@ -1,9 +1,9 @@
 <?php
 
-require __DIR__ . '/../app/Controllers/AboutController.php';
-require __DIR__ . '/../app/Controllers/HomeController.php';
-require __DIR__ . '/../app/Controllers/PostController.php';
-require __DIR__ . '/../app/Controllers/LinkController.php';
+use App\Controllers\HomeController;
+use App\Controllers\AboutController;
+use App\Controllers\PostController;
+use App\Controllers\LinkController;
 
 $router->get('/', [HomeController::class, 'index']);
 $router->get('/about', [AboutController::class, 'index']);

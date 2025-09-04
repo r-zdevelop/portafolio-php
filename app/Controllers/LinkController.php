@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Controllers;
+
+use Framework\Database;
+use Framework\Validator;
+
 class LinkController
 {
     public function index()
@@ -20,8 +25,6 @@ class LinkController
 
     public function store()
     {
-        require_once __DIR__ . '/../../framework/Validator.php';
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $validator = new Validator($_POST, [
                 'title'         => 'required|min:3|max:255',
