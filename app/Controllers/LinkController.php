@@ -65,7 +65,41 @@ class LinkController
 
     public function update()
     {
-        // Lógica para actualizar el proyecto en la base de datos
+        require_once __DIR__ . '/../../framework/Validator.php';
+
+        $db = new Database();
+        $id = $_GET['id'] ?? null;
+
+        $project = $db->query('SELECT * FROM links WHERE id = :id', ['id' => $id])->firstOrFail();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $validator = new Validator($_POST, [
+                'title'         => 'required|min:3|max:255',
+                'url'           => 'required|url|max:190',
+                'description'   => 'required|min:3|max:500'
+            ]);
+
+            if ($validator->passes()) {
+                $title = $_POST['title'] ?? '';
+                $url = $_POST['url'] ?? '';
+                $description = $_POST['description'] ?? '';
+
+                $db->query('UPDATE links SET title = :title, url = :url, description = :description WHERE id = :id', [
+                    'id' => $id,
+                    'title' => $title,
+                    'url' => $url,
+                    'description' => $description
+                ]);
+
+                // Redirigir o mostrar un mensaje de éxito
+                header('Location: /links');
+                exit;
+            } else {
+                $errors = $validator->errors();
+            }
+        }
+
+        require __DIR__ . '/../../resources/links-edit.template.php';
     }
 
     public function delete()

@@ -18,6 +18,11 @@ class Router
         $this->routes['POST'][$uri] = $action;
     }
 
+    public function put($uri, $action)
+    {
+        $this->routes['PUT'][$uri] = $action;
+    }
+
     public function delete($uri, $action)
     {
         $this->routes['DELETE'][$uri] = $action;
