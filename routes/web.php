@@ -12,4 +12,5 @@ $router->get('/journal', [PostController::class, 'show']);
 $router->get('/links', [LinkController::class, 'index']);
 $router->get('/links/create', [LinkController::class, 'create']);
 $router->post('/links/store', [LinkController::class, 'store']);
+$router->get('/links/edit', [LinkController::class, 'edit']);
 $router->delete('/links/delete', [LinkController::class, 'delete']);
