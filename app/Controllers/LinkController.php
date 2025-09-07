@@ -10,7 +10,7 @@ class LinkController
     public function index()
     {
         $title = 'Proyectos';
-        $db = new Database();
+        $db = db();
         $links = $db->query('SELECT * FROM links ORDER BY id DESC')->get();
 
         view('links', ['title' => $title, 'links' => $links]);
@@ -36,7 +36,7 @@ class LinkController
                 $title = $_POST['title'] ?? '';
                 $url = $_POST['url'] ?? '';
                 $description = $_POST['description'] ?? '';
-                $db = new Database();
+                $db = db();
                 $db->query('INSERT INTO links (title, url, description) VALUES (:title, :url, :description)', [
                     'title' => $title,
                     'url' => $url,
@@ -44,7 +44,7 @@ class LinkController
                 ]);
 
                 // Redirigir o mostrar un mensaje de éxito
-                header('Location: /links');
+                redirect('/links');
                 exit;
             } else {
                 $errors = $validator->errors();
@@ -58,7 +58,7 @@ class LinkController
     {
         $title = 'Editar Proyecto';
 
-        $db = new Database();
+        $db = db();
         $id = $_GET['id'] ?? null;
 
         $project = $db->query('SELECT * FROM links WHERE id = :id', ['id' => $id])->firstOrFail();
@@ -70,7 +70,7 @@ class LinkController
     {
         require_once __DIR__ . '/../../framework/Validator.php';
 
-        $db = new Database();
+        $db = db();
         $id = $_GET['id'] ?? null;
 
         $project = $db->query('SELECT * FROM links WHERE id = :id', ['id' => $id])->firstOrFail();
@@ -96,7 +96,7 @@ class LinkController
                 ]);
 
                 // Redirigir o mostrar un mensaje de éxito
-                header('Location: /links');
+                redirect('/links');
                 exit;
             } else {
                 $errors = $validator->errors();
@@ -108,12 +108,12 @@ class LinkController
 
     public function delete()
     {
-        $db = new Database();
+        $db = db();
         $id = $_POST['id'] ?? null;
         if ($id) {
             $db->query('DELETE FROM links WHERE id = :id', ['id' => $id]);
         }
-        header('Location: /links');
+        redirect('/links');
         exit;
     }
 }

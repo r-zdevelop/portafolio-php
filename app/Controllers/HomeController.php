@@ -9,7 +9,7 @@ class HomeController
     public function index()
     {
         $title = 'Inicio';
-        $db = new Database();
+        $db = db();
         
         // Fetch recent posts for the homepage
         $posts = $db->query('SELECT * FROM posts ORDER BY id DESC LIMIT 6')->get();

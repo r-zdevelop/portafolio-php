@@ -11,6 +11,6 @@
 
 <body>
 
-<?php require __DIR__ . '/navbar.php'; ?>
+<?php partial_resource('navbar'); ?>
 
 <div class="container mx-auto p-4">
