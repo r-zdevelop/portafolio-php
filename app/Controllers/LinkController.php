@@ -13,14 +13,14 @@ class LinkController
         $db = new Database();
         $links = $db->query('SELECT * FROM links ORDER BY id DESC')->get();
 
-        require __DIR__ . '/../../resources/links.template.php';
+        view('links', ['title' => $title, 'links' => $links]);
     }
 
     public function create()
     {
         $title = 'Crear Proyecto';
 
-        require __DIR__ . '/../../resources/links-create.template.php';
+        view('links-create', ['title' => $title]);
     }
 
     public function store()
@@ -51,7 +51,7 @@ class LinkController
             }
         }
 
-        require __DIR__ . '/../../resources/links-create.template.php';
+        view('links-create', ['title' => 'Crear Proyecto', 'errors' => $errors ?? []]);
     }
 
     public function edit()
@@ -63,7 +63,7 @@ class LinkController
 
         $project = $db->query('SELECT * FROM links WHERE id = :id', ['id' => $id])->firstOrFail();
 
-        require __DIR__ . '/../../resources/links-edit.template.php';
+        view('links-edit', ['title' => $title, 'project' => $project]);
     }
 
     public function update()
@@ -74,6 +74,7 @@ class LinkController
         $id = $_GET['id'] ?? null;
 
         $project = $db->query('SELECT * FROM links WHERE id = :id', ['id' => $id])->firstOrFail();
+        $title = 'Editar Proyecto';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $validator = new Validator($_POST, [
@@ -102,7 +103,7 @@ class LinkController
             }
         }
 
-        require __DIR__ . '/../../resources/links-edit.template.php';
+        view('links-edit', ['title' => $title, 'project' => $project, 'errors' => $errors ?? []]);
     }
 
     public function delete()

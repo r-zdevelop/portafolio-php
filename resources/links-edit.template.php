@@ -14,7 +14,7 @@
                     type="text" 
                     name="title" 
                     class="w-full outline-1 outline-gray-300 rounded-md px-3 py-2 text-gray-900" 
-                    value="<?= $_POST['title'] ?? $project['title'] ?? '' ?>"
+                    value="<?= field_sent_on_form('title', $project) ?>"
                 />
             </div>
         </div>
@@ -26,7 +26,7 @@
                     type="text" 
                     name="url" 
                     class="w-full outline-1 outline-gray-300 rounded-md px-3 py-2 text-gray-900" 
-                    value="<?= $_POST['url'] ?? $project['url'] ?? '' ?>">
+                    value="<?= field_sent_on_form('url', $project) ?>">
             </div>
         </div>
 
@@ -36,7 +36,7 @@
                 <textarea 
                     name="description" 
                     rows="2" 
-                    class="w-full outline-1 outline-gray-300 rounded-md px-4 py-2 text-gray-900"><?= $_POST['description'] ?? $project['description'] ?? '' ?></textarea>
+                    class="w-full outline-1 outline-gray-300 rounded-md px-4 py-2 text-gray-900"><?= field_sent_on_form('description', $project) ?></textarea>
             </div>
         </div>
 
