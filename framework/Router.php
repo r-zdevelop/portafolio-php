@@ -11,23 +11,35 @@ class Router
         $this->loadRoutes('web');
     }
 
-    public function get($uri, $action)
+    public function get($uri, $action, string|null $middleware = null)
     {
-        $this->routes['GET'][$uri] = $action;
+        $this->routes['GET'][$uri] = [
+            'action' => $action,
+            'middleware' => $middleware
+        ];
     }
-    public function post($uri, $action)
+    public function post($uri, $action, string|null $middleware = null)
     {
-        $this->routes['POST'][$uri] = $action;
+        $this->routes['POST'][$uri] = [
+            'action' => $action,
+            'middleware' => $middleware
+        ];
     }
 
-    public function put($uri, $action)
+    public function put($uri, $action, string|null $middleware = null)
     {
-        $this->routes['PUT'][$uri] = $action;
+        $this->routes['PUT'][$uri] = [
+            'action' => $action,
+            'middleware' => $middleware
+        ];
     }
 
-    public function delete($uri, $action)
+    public function delete($uri, $action, string|null $middleware = null)
     {
-        $this->routes['DELETE'][$uri] = $action;
+        $this->routes['DELETE'][$uri] = [
+            'action' => $action,
+            'middleware' => $middleware
+        ];
     }
 
     public function run()
@@ -35,10 +47,16 @@ class Router
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
 
-        $action = $this->routes[$method][$uri] ?? null;
+        $action = $this->routes[$method][$uri]['action'] ?? null;
 
         if (!$action) {
             exit('Route not found ' . $method . ' ' . $uri);
+        }
+
+        $middleware = $this->routes[$method][$uri]['middleware'] ?? null;
+
+        if ($middleware) {
+            (new $middleware())();
         }
 
         [$controller, $method] = $action;
