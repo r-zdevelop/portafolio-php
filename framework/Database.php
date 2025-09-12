@@ -30,16 +30,21 @@ class Database
 
     public function get()
     {
-        $result = $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = $this->stmt->fetchAll();
         if (!$result) {
             exit('404 Not Found');
         }
         return $result;
     }
 
+    public function first()
+    {
+        return $this->stmt->fetch();
+    }
+
     public function firstOrFail()
     {
-        $result = $this->stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $this->first();
         if (!$result) {
             exit('404 Not Found');
         }

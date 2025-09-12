@@ -72,6 +72,6 @@ class Router
         
         $filePath = __DIR__ . '/../routes/' . $file . '.php';
 
-        return $filePath;
+        require $filePath;
     }
 }

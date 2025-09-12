@@ -27,7 +27,8 @@ class Validator
                     'min'       => strlen($value) < $param  ? "$field must be at least $param characters."           : null,
                     'max'       => strlen($value) > $param  ? "$field must not exceed $param characters."            : null,
                     'url'       => filter_var($value, FILTER_VALIDATE_URL) === false ? "$field must be a valid URL." : null,
-                    default => null,
+                    'email'     => filter_var($value, FILTER_VALIDATE_EMAIL) === false ? "$field must be a valid EMAIL." : null,
+                    default => throw new \InvalidArgumentException("Validation rule '$name' is not defined"),
                 };
 
                 if ($error) {

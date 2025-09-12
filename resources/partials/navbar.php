@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $navLinks = [
     [
@@ -23,7 +23,7 @@ $navLinks = [
             <?php foreach ($navLinks as $link): ?>
                 <a href="<?= $link['url'] ?>" class="
                     <?=
-                        is_current_route($link['url'])
+                    is_current_route($link['url'])
                         ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm'
                         : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
                     ?>
@@ -31,6 +31,23 @@ $navLinks = [
                     <?= $link['title'] ?>
                 </a>
             <?php endforeach; ?>
+            <?php if (is_authenticated()): ?>
+                <form action="/logout" method="POST">
+                    <button type="submit" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium cursor-pointer">
+                        Cerrar sesión
+                    </button>
+                </form>
+            <?php else: ?>
+                <a href="/login" class="
+                    <?=
+                    is_current_route('/login')
+                        ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm'
+                        : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
+                    ?>
+                ">
+                    Login
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 </nav>

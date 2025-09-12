@@ -67,10 +67,18 @@ if (!function_exists('config')) {
     }
 }
 
+if (!function_exists('normalize_path')) {
+    function normalize_path(string $path): string
+    {
+        return trim($path, '/');
+    }
+}
+
+
 if (!function_exists('redirect')) {
     function redirect(string $url): void
     {
-        header("Location: /" . ltrim($url, '/'));
+        header("Location: /" . normalize_path($url));
         exit;
     }
 }
@@ -98,5 +106,12 @@ if (!function_exists('partial_resource')) {
         }
 
         require $partialPath;
+    }
+}
+
+if (!function_exists('is_authenticated')) {
+    function is_authenticated(): bool
+    {
+        return isset($_SESSION['user']);
     }
 }
