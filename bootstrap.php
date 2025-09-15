@@ -1,5 +1,7 @@
 <?php
 
+use Framework\SessionManager;
+
 require __DIR__ . '/vendor/autoload.php';
 
-session_start();
+SessionManager::start();

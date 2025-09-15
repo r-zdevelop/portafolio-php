@@ -5,6 +5,9 @@
 </div>
 
 <div class="w-full max-w-xl mx-auto">
+
+    <?= alert() ?>
+
     <form method="POST" action="/links/update?id=<?= $project['id'] ?>" class="mb-8">
         <input type="hidden" name="_method" value="PUT">
         <div class="mb-4">

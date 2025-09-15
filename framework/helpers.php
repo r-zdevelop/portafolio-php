@@ -78,8 +78,12 @@ if (!function_exists('normalize_path')) {
 
 
 if (!function_exists('redirect')) {
-    function redirect(string $url): void
+    function redirect(string $url, string|null $message = null, int $status = 302): void
     {
+        if ($message) {
+            session()->setFlash('message', $message);
+        }
+        http_response_code($status);
         header("Location: /" . normalize_path($url));
         exit;
     }
@@ -138,6 +142,14 @@ if (!function_exists('errors')) {
     {
         $errors = session()->getFlash('errors') ?? [];
 
+        if (empty($errors)) {
+            return '';
+        }
+
+        if (!is_array($errors)) {
+            $errors = [$errors];
+        }
+
         $html = '<ul class="mt-4 text-red-500">';
 
         foreach ($errors as $error) {
@@ -147,5 +159,21 @@ if (!function_exists('errors')) {
         $html .= '</ul>';
 
         return $html;
+    }
+}
+
+if (!function_exists('alert')) {
+    function alert()
+    {
+        $message = session()->getFlash('message') ?? '';
+        if (empty($message)) {
+            return '';
+        }
+        return <<<HTML
+        <div class="bg-blue-100 border border-blue-400 text-blue-700 text-xs px-2 py-1 rounded mb-4">
+            <strong class="font-bold">&rarr;</strong>
+            {$message}
+        </div>
+        HTML;
     }
 }

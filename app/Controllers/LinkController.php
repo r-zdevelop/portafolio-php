@@ -42,7 +42,7 @@ class LinkController
         ]);
 
         // Redirigir o mostrar un mensaje de éxito
-        redirect('/links');
+        redirect('/links/create', 'Proyecto creado correctamente');
     }
 
     public function edit()
@@ -82,7 +82,7 @@ class LinkController
         ]);
 
         // Redirigir o mostrar un mensaje de éxito
-        redirect('/links');
+        redirect('/links/edit', 'Proyecto actualizado correctamente');
     }
 
     public function delete()

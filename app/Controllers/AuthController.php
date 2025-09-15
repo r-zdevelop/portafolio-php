@@ -27,9 +27,12 @@ class AuthController
             $_POST['password']
         );
 
-        if ($login) {
-            redirect('/');
+        if (!$login) {
+            session()->setFlash('errors', 'Invalid credentials');
+            back();
         }
+
+        redirect('/');
     }
 
     public function logout()
