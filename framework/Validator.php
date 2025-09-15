@@ -14,7 +14,7 @@ class Validator
         $this->validate();
 
         if ($this->autoredirect && !$this->passes()) {
-            back();
+            $this->redirectIfFails();
         }
     }
 
@@ -25,9 +25,11 @@ class Validator
 
     public function validate(): void
     {
+        $formValues = [];
         foreach ($this->rules as $field => $rules) {
             $rules = explode('|', $rules);
             $value = trim($this->data[$field]);
+            $formValues[$field] = $value;
 
             foreach ($rules as $rule) {
                 [$name, $param] = array_pad(explode(':', $rule), 2, null);
@@ -48,16 +50,22 @@ class Validator
                 }
             }            
         }
+        session()->set('formValues', $formValues);
     }
 
     public function redirectIfFails(): void
     {
+        session()->setFlash('errors', $this->errors);
         back();
     }
 
     public function passes(): bool
     {
-        return empty($this->errors);
+        if (empty($this->errors)) {
+            session()->remove('formValues');
+            return true;
+        }
+        return false;
     }
 
     public function errors(): array
