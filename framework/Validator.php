@@ -8,9 +8,19 @@ class Validator
 
     public function __construct(
         protected array $data,
-        protected array $rules = []
+        protected array $rules = [],
+        protected bool $autoredirect = true
     ) {
         $this->validate();
+
+        if ($this->autoredirect && !$this->passes()) {
+            back();
+        }
+    }
+
+    public static function make(array $data, array $rules, bool $autoredirect = true): self
+    {
+        return new self($data, $rules, $autoredirect);
     }
 
     public function validate(): void
@@ -38,6 +48,11 @@ class Validator
                 }
             }            
         }
+    }
+
+    public function redirectIfFails(): void
+    {
+        back();
     }
 
     public function passes(): bool

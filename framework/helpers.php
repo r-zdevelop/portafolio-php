@@ -115,3 +115,11 @@ if (!function_exists('is_authenticated')) {
         return isset($_SESSION['user']);
     }
 }
+
+if (!function_exists('back')) {
+    function back()
+    {
+        header('Location: ' . $_SERVER['HTTP_REFERER'] ?? '/');
+        exit;
+    }
+}

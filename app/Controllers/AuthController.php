@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Framework\Authenticate;
 use Framework\Validator;
 
 class AuthController
@@ -13,7 +14,7 @@ class AuthController
 
     public function authenticate()
     {
-        $validator = new Validator(
+        Validator::make(
             $_POST,
             [
                 'email' => 'required|email',
@@ -21,34 +22,20 @@ class AuthController
             ]
         );
 
-        if ($validator->passes()) {
-            $user = db()->query(
-                'SELECT * FROM users WHERE email = :email',
-                ['email' => $_POST['email']]
-            )->first();
+        $login = (new Authenticate())->login(
+            $_POST['email'],
+            $_POST['password']
+        );
 
-            if ($user && password_verify($_POST['password'], $user['password'])) {
-                $_SESSION['user'] = [
-                    'id' => $user['id'],
-                    'email' => $user['email'],
-                    'name' => $user['name'],
-                ];
-
-                redirect('/');
-            }
+        if ($login) {
+            redirect('/');
         }
-
-        view('login', [
-            'errors' => $validator->errors()
-        ]);
     }
 
     public function logout()
     {
-        unset($_SESSION['user']);
+        (new Authenticate())->logout();
 
-        session_destroy();
-
-        redirect('/');
+        redirect('/login');
     }
 }

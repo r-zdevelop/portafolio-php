@@ -25,33 +25,24 @@ class LinkController
 
     public function store()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $validator = new Validator($_POST, [
-                'title'         => 'required|min:3|max:255',
-                'url'           => 'required|url|max:190',
-                'description'   => 'required|min:3|max:500'
-            ]);
+        Validator::make($_POST, [
+            'title'         => 'required|min:3|max:255',
+            'url'           => 'required|url|max:190',
+            'description'   => 'required|min:3|max:500'
+        ]);
 
-            if ($validator->passes()) {
-                $title = $_POST['title'] ?? '';
-                $url = $_POST['url'] ?? '';
-                $description = $_POST['description'] ?? '';
-                $db = db();
-                $db->query('INSERT INTO links (title, url, description) VALUES (:title, :url, :description)', [
-                    'title' => $title,
-                    'url' => $url,
-                    'description' => $description
-                ]);
+        $title = $_POST['title'] ?? '';
+        $url = $_POST['url'] ?? '';
+        $description = $_POST['description'] ?? '';
+        $db = db();
+        $db->query('INSERT INTO links (title, url, description) VALUES (:title, :url, :description)', [
+            'title' => $title,
+            'url' => $url,
+            'description' => $description
+        ]);
 
-                // Redirigir o mostrar un mensaje de éxito
-                redirect('/links');
-                exit;
-            } else {
-                $errors = $validator->errors();
-            }
-        }
-
-        view('links-create', ['title' => 'Crear Proyecto', 'errors' => $errors ?? []]);
+        // Redirigir o mostrar un mensaje de éxito
+        redirect('/links');
     }
 
     public function edit()
@@ -68,42 +59,30 @@ class LinkController
 
     public function update()
     {
-        require_once __DIR__ . '/../../framework/Validator.php';
-
-        $db = db();
         $id = $_GET['id'] ?? null;
 
-        $project = $db->query('SELECT * FROM links WHERE id = :id', ['id' => $id])->firstOrFail();
+        $project = db()->query('SELECT * FROM links WHERE id = :id', ['id' => $id])->firstOrFail();
         $title = 'Editar Proyecto';
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $validator = new Validator($_POST, [
-                'title'         => 'required|min:3|max:255',
-                'url'           => 'required|url|max:190',
-                'description'   => 'required|min:3|max:500'
-            ]);
+        Validator::make($_POST, [
+            'title'         => 'required|min:3|max:255',
+            'url'           => 'required|url|max:190',
+            'description'   => 'required|min:3|max:500'
+        ]);
 
-            if ($validator->passes()) {
-                $title = $_POST['title'] ?? '';
-                $url = $_POST['url'] ?? '';
-                $description = $_POST['description'] ?? '';
+        $title = $_POST['title'] ?? '';
+        $url = $_POST['url'] ?? '';
+        $description = $_POST['description'] ?? '';
 
-                $db->query('UPDATE links SET title = :title, url = :url, description = :description WHERE id = :id', [
-                    'id' => $id,
-                    'title' => $title,
-                    'url' => $url,
-                    'description' => $description
-                ]);
+        db()->query('UPDATE links SET title = :title, url = :url, description = :description WHERE id = :id', [
+            'id' => $id,
+            'title' => $title,
+            'url' => $url,
+            'description' => $description
+        ]);
 
-                // Redirigir o mostrar un mensaje de éxito
-                redirect('/links');
-                exit;
-            } else {
-                $errors = $validator->errors();
-            }
-        }
-
-        view('links-edit', ['title' => $title, 'project' => $project, 'errors' => $errors ?? []]);
+        // Redirigir o mostrar un mensaje de éxito
+        redirect('/links');
     }
 
     public function delete()
